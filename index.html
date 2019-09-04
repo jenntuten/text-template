@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.print.css" type="text/css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.1/fullcalendar.min.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+    
+
+    <!-- <link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet"> -->
+    <title>Text Template</title>
+</head>
+
+<body>
+    <style>
+        body {
+  background: #370c4d;
+  color: white;
+  font-family: sans-serif;
+}
+.user-input, .user-input2 {
+  display: grid;
+  width: 15%;
+  min-width: 200px;
+  grid-gap: 4px;
+  padding: 10px;
+  float: left;
+  
+}
+.submit, .clear, .submit2, .clear2, #cp_btn {
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #00adbc;
+  color: white;
+}
+.guestname, .hotelname, .requestername {
+  text-transform: capitalize;
+}
+.click{
+  padding: 10px;
+}
+.click .copy{
+background-color: rgba(0,0,0,.8);
+padding: 3px;
+border-radius: 12px;
+position: absolute;
+margin-top: -2px;
+width: 80px;
+cursor: pointer;
+color: #f7cc83;
+display: none;
+  text-align: center;
+}
+.click:hover .copy{
+	display: block;
+}
+.output, .output2 {
+  margin-top: 15px;
+}
+input {
+    color: black;
+}
+        </style>
+    <!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Where is it Winter?</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="index.html">Home </a>
+                
+                <a class="nav-item nav-link active" href="#">Where is it winter?<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="summer.html">Where is it summer?</a>
+            </div>
+        </div>
+    </nav>-->
+
+    <div class="user-input">
+            Guest Name: <input class="guest"/>
+              Hotel Name: <input class="hotel"/>
+            Confirmation Number: <input class="conf"/>
+            <button class="submit">Submit</button>
+              <button class="clear">Clear</button>
+            
+            <div id="output">Hi <span class="guestname"></span>, you are all set at the <span class="hotelname"></span> with hotel confirmation #<span class="hotelconf"></span>. Enjoy your stay!</div>
+              <button id="cp_btn">Copy</button>
+            </div>
+            
+            <!--<div class="user-input2">
+              Requester Name: <input class="requester"/>
+            Guest Name: <input class="guest2"/>
+              Hotel: <input class="hotel2"/>
+            ResID: <input class="resID2"/>
+            Confirmation: <input class="conf2"/>
+            <button class="submit2">Submit</button>
+              <button class="clear2">Clear</button>
+            
+              <span class="output2">Hi <span class="requestername"></span>, <span class="guestname2"></span> is all set at the <span class="hotelname2"></span> under ResID #<span class="resvID2"></span> and hotel confirmation #<span class="hotelconf2"></span>. Thanks!</span>
+            </div>
+            <button id="cp_btn">Copy</button>
+            <div class="click">
+              <div class="copy">copy text</div>
+              <span class="final"><span class="output3">Hi, <span class="guestname"></span>, you are all set at the <span class="hotelname"></span> under ResID #<span class="resvID"></span> and hotel confirmation #<span class="hotelconf"></span>. Thanks!</span></span>
+            </div>
+            -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+    <script language="javascript" src="https://momentjs.com/downloads/moment.js"></script>
+
+
+    <script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
+
+    <!-- our javascript 
+    <script src="assets/javascript/app.js" async defer></script>-->
+    <script>
+        $(document).ready(function () {
+            $('#output').hide();
+            $('#cp_btn').hide();
+$('.output2').hide();
+$('.output3').hide();
+$('.submit').on('click', function() {
+  let guest = $('.guest').val().trim();
+  console.log(guest);
+  //$('.guest').css('text-transform', 'capitalize');
+  let hotel = $('.hotel').val().trim();
+  console.log(guest);
+  //let resID = $('.resID').val().trim();
+  //console.log(resID);
+  let conf = $('.conf').val().trim();
+  console.log(conf);
+  $('.guestname').html(guest);
+  $('.guest').css('text-transform', 'capitalize');
+  $('.guestname').css('text-transform', 'capitalize');
+  $('.hotelname').html(hotel);
+  $('.hotelname').css('text-transform', 'capitalize');
+  //$('.resvID').html(resID);
+  $('.hotelconf').html(conf);
+  $('#output').show();
+  $('#cp_btn').show();
+  
+})
+$('.clear').on('click', function() {
+  $('.guest').val('');
+  $('.hotel').val('');
+  //$('.resID').val('');
+  $('.conf').val('');
+  $('#output').hide();
+  $('#cp_btn').hide();
+})
+$(document).ready(function(){
+
+});
+$('.submit2').on('click', function() {
+  let requester = $('.requester').val().trim();
+  console.log(requester);
+  let guest = $('.guest2').val().trim();
+  console.log(guest);
+  //$('.guest').css('text-transform', 'capitalize');
+  let hotel = $('.hotel2').val().trim();
+  console.log(guest);
+  let resID = $('.resID2').val().trim();
+  console.log(resID);
+  let conf = $('.conf2').val().trim();
+  console.log(conf);
+  $('.requestername').html(requester);
+  $('.requestername').css('text-transform', 'capitalize');
+  $('.guestname2').html(guest);
+  $('.guest2').css('text-transform', 'capitalize');
+  $('.guestname2').css('text-transform', 'capitalize');
+  $('.hotelname2').html(hotel);
+  $('.hotelname2').css('text-transform', 'capitalize');
+  $('.resvID2').html(resID);
+  $('.hotelconf2').html(conf);
+  $('.output2').show();
+      $(".click .output3").click(function(event){
+    var $tempElement = $("<input>");
+        $("body").append($tempElement);
+        $tempElement.val($(this).closest(".click").find(".output3").text()).select();
+        document.execCommand("Copy");
+        console.log('copied')
+        $tempElement.remove();
+    });
+})
+$('.clear2').on('click', function() {
+  $('.requester').val('');
+  $('.guest2').val('');
+  $('.hotel2').val('');
+  $('.resID2').val('');
+  $('.conf2').val('');
+  $('.output2').hide();
+})
+document.getElementById("cp_btn").addEventListener("click", copy_text);
+
+function copy_text() {
+    var copyText = document.getElementById("output");
+    var textArea = document.createElement("textarea");
+    textArea.value = copyText.textContent;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("Copy");
+    textArea.remove();
+}
+})
+//END OF SCRIPT
+      
+    </script>
+</body>
+
+</html>
